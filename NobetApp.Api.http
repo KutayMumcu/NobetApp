@@ -1,0 +1,6 @@
+@NobetApp.Api_HostAddress = http://localhost:5005
+
+GET {{NobetApp.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
