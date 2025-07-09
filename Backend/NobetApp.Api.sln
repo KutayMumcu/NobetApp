@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NobetApp.Api", "NobetApp.Api.csproj", "{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BA78278-32FE-4D62-BD0F-B77A3AAF773E}
+	EndGlobalSection
+EndGlobal

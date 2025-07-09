@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NobetApp.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae188927bbb520d432f7e3de19f1e6eba475825a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bae89c86ae00eac7ea3549da2f14673be3aab79f")]
 [assembly: System.Reflection.AssemblyProductAttribute("NobetApp.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NobetApp.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

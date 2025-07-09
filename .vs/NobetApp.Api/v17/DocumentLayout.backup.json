@@ -3,65 +3,47 @@
   "WorkspaceRootPath": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|c:\\users\\kutay\\desktop\\nobetapp.api\\shift-mate-frontend\\src\\app\\components\\main-layout.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|solutionrelative:shift-mate-frontend\\src\\app\\components\\main-layout.component.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|c:\\users\\kutay\\desktop\\nobetapp.api\\shift-mate-frontend\\src\\app\\components\\shift-monitoring-table\\shift-monitoring-table.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|solutionrelative:shift-mate-frontend\\src\\app\\components\\shift-monitoring-table\\shift-monitoring-table.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|c:\\users\\kutay\\desktop\\nobetapp.api\\shift-mate-frontend\\src\\app\\app.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|solutionrelative:shift-mate-frontend\\src\\app\\app.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|c:\\users\\kutay\\desktop\\nobetapp.api\\shift-mate-frontend\\src\\app\\components\\main-layout.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|solutionrelative:shift-mate-frontend\\src\\app\\components\\main-layout.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|c:\\users\\kutay\\desktop\\nobetapp.api\\shift-mate-frontend\\src\\app\\components\\shift-config-table\\shift-config-table.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|solutionrelative:shift-mate-frontend\\src\\app\\components\\shift-config-table\\shift-config-table.component.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     }
   ],
   "DocumentGroupContainers": [
     {
-      "Orientation": 1,
+      "Orientation": 0,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 200,
-          "SelectedChildIndex": 2,
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "app.html",
-              "DocumentMoniker": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\app.html",
-              "RelativeDocumentMoniker": "shift-mate-frontend\\src\\app\\app.html",
-              "ToolTip": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\app.html",
-              "RelativeToolTip": "shift-mate-frontend\\src\\app\\app.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-07-01T09:07:53.86Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "main-layout.component.ts",
-              "DocumentMoniker": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\components\\main-layout.component.ts",
-              "RelativeDocumentMoniker": "shift-mate-frontend\\src\\app\\components\\main-layout.component.ts",
-              "ToolTip": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\components\\main-layout.component.ts",
-              "RelativeToolTip": "shift-mate-frontend\\src\\app\\components\\main-layout.component.ts",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-07-01T09:03:45.648Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "main-layout.component.html",
-              "DocumentMoniker": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\components\\main-layout.component.html",
-              "RelativeDocumentMoniker": "shift-mate-frontend\\src\\app\\components\\main-layout.component.html",
-              "ToolTip": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\components\\main-layout.component.html",
-              "RelativeToolTip": "shift-mate-frontend\\src\\app\\components\\main-layout.component.html",
-              "ViewState": "AgIAADMAAAAAAAAAAAAswEUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-07-01T07:10:38.243Z",
+              "Title": "shift-monitoring-table.component.ts",
+              "DocumentMoniker": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\components\\shift-monitoring-table\\shift-monitoring-table.component.ts",
+              "RelativeDocumentMoniker": "shift-mate-frontend\\src\\app\\components\\shift-monitoring-table\\shift-monitoring-table.component.ts",
+              "ToolTip": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\components\\shift-monitoring-table\\shift-monitoring-table.component.ts",
+              "RelativeToolTip": "shift-mate-frontend\\src\\app\\components\\shift-monitoring-table\\shift-monitoring-table.component.ts",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAwwKkAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-09T20:44:32.138Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "shift-config-table.component.ts",
+              "DocumentMoniker": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\components\\shift-config-table\\shift-config-table.component.ts",
+              "RelativeDocumentMoniker": "shift-mate-frontend\\src\\app\\components\\shift-config-table\\shift-config-table.component.ts",
+              "ToolTip": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\shift-mate-frontend\\src\\app\\components\\shift-config-table\\shift-config-table.component.ts",
+              "RelativeToolTip": "shift-mate-frontend\\src\\app\\components\\shift-config-table\\shift-config-table.component.ts",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAAAF4AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-09T20:19:16.677Z"
             }
           ]
         }
