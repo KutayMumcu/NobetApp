@@ -241,6 +241,7 @@ namespace NobetApp.Api.Controllers
         }
 
         // PUT: api/leave-requests/{id}/approve
+        // PUT: api/leave-requests/{id}/approve
         [HttpPut("{id}/approve")]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> ApproveLeaveRequest(int id, [FromBody] AdminResponseDto response)
@@ -270,7 +271,14 @@ namespace NobetApp.Api.Controllers
                 leaveRequest.ApprovedByUserId = adminUserId;
                 leaveRequest.ApprovedAt = DateTime.UtcNow;
 
+                // Önce izin talebini kaydet
                 await _context.SaveChangesAsync();
+
+                _logger.LogInformation("İzin talebi onaylandı: ID={RequestId}, UserId={UserId}, LeaveDate={LeaveDate}-{EndDate}",
+                    id, leaveRequest.UserId, leaveRequest.LeaveDate, leaveRequest.EndDate);
+
+                // Sonra çakışmaları çözümle (bu kendi SaveChanges'ini çağırır)
+                await handleLeaveConflicts();
 
                 return Ok(new { message = "İzin talebi onaylandı." });
             }
@@ -278,6 +286,228 @@ namespace NobetApp.Api.Controllers
             {
                 _logger.LogError(ex, "İzin talebi onaylanırken hata oluştu.");
                 return StatusCode(500, new { message = "İzin talebi onaylanırken hata oluştu.", error = ex.Message });
+            }
+        }
+
+        private async Task handleLeaveConflicts()
+        {
+            try
+            {
+                // Mevcut nöbet programını al
+                var schedules = await _context.DutySchedules
+                    .OrderBy(s => s.Date)
+                    .ToListAsync();
+
+                if (!schedules.Any())
+                {
+                    _logger.LogInformation("Nöbet programı bulunamadı, çakışma kontrolü yapılmadı.");
+                    return;
+                }
+
+                // Onaylanmış izin taleplerini al
+                var approvedLeaves = await _context.LeaveRequests
+                    .Where(l => l.Status == LeaveStatus.Approved)
+                    .Include(l => l.User)
+                    .ToListAsync();
+
+                // Sistem kullanıcılarını departmanlara göre grupla
+                var users = await _context.Users.ToListAsync();
+                var configUsers = users.Where(u => u.Departmant.ToLower() == "konfigurasyon").ToList();
+                var izlemeUsers = users.Where(u => u.Departmant.ToLower() == "izleme").ToList();
+
+                // Yardımcı fonksiyon: Belirli tarihte kullanıcı izinli mi?
+                bool IsOnLeave(string? fullName, DateTime dutyDate)
+                {
+                    if (string.IsNullOrWhiteSpace(fullName))
+                        return false;
+
+                    // Nöbet haftasının başlangıç ve bitiş tarihlerini hesapla
+                    var dutyStartDate = dutyDate; // Nöbet haftasının başlangıcı
+                    var dutyEndDate = dutyDate.AddDays(6); // Nöbet haftasının bitişi
+
+                    return approvedLeaves.Any(l =>
+                        l.User != null &&
+                        l.User.FullName.Equals(fullName, StringComparison.OrdinalIgnoreCase) &&
+                        // İzin tarihi ile nöbet haftası kesişiyor mu?
+                        l.LeaveDate <= dutyEndDate && l.EndDate >= dutyStartDate);
+                }
+
+                var configNames = configUsers.Select(u => u.FullName).ToList();
+                var izlemeNames = izlemeUsers.Select(u => u.FullName).ToList();
+
+                var conflictLog = new List<string>();
+                bool hasChanges = false;
+
+                foreach (var schedule in schedules)
+                {
+                    var date = schedule.Date;
+                    bool scheduleChanged = false;
+
+                    _logger.LogInformation("Checking schedule for date: {Date}, Department: {Department}",
+                        date, schedule.Department);
+
+                    if (schedule.Department.ToLower() == "konfigurasyon")
+                    {
+                        // PRIMARY kontrolü
+                        if (!string.IsNullOrWhiteSpace(schedule.Primary) && IsOnLeave(schedule.Primary, date))
+                        {
+                            _logger.LogInformation("Primary {Primary} is on leave for date {Date}",
+                                schedule.Primary, date);
+
+                            var available = configNames
+                                .Where(name => !IsOnLeave(name, date))
+                                .Where(name => !name.Equals(schedule.Backup, StringComparison.OrdinalIgnoreCase))
+                                .FirstOrDefault();
+
+                            if (available != null)
+                            {
+                                var oldPrimary = schedule.Primary;
+                                schedule.Primary = available;
+                                scheduleChanged = true;
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] Konfigürasyon Primary değiştirildi: {oldPrimary} → {available} (izin nedeniyle)");
+                            }
+                            else
+                            {
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] Konfigürasyon Primary için uygun kullanıcı bulunamadı: {schedule.Primary}");
+                            }
+                        }
+
+                        // BACKUP kontrolü
+                        if (!string.IsNullOrWhiteSpace(schedule.Backup) && IsOnLeave(schedule.Backup, date))
+                        {
+                            _logger.LogInformation("Backup {Backup} is on leave for date {Date}",
+                                schedule.Backup, date);
+
+                            var available = configNames
+                                .Where(name => !IsOnLeave(name, date))
+                                .Where(name => !name.Equals(schedule.Primary, StringComparison.OrdinalIgnoreCase))
+                                .FirstOrDefault();
+
+                            if (available != null)
+                            {
+                                var oldBackup = schedule.Backup;
+                                schedule.Backup = available;
+                                scheduleChanged = true;
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] Konfigürasyon Backup değiştirildi: {oldBackup} → {available} (izin nedeniyle)");
+                            }
+                            else
+                            {
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] Konfigürasyon Backup için uygun kullanıcı bulunamadı: {schedule.Backup}");
+                            }
+                        }
+                    }
+                    else if (schedule.Department.ToLower() == "izleme")
+                    {
+                        // KANBAN kontrolü
+                        if (!string.IsNullOrWhiteSpace(schedule.Kanban) && IsOnLeave(schedule.Kanban, date))
+                        {
+                            _logger.LogInformation("Kanban {Kanban} is on leave for date {Date}",
+                                schedule.Kanban, date);
+
+                            var available = izlemeNames
+                                .Where(name => !IsOnLeave(name, date))
+                                .Where(name => !name.Equals(schedule.Monitoring, StringComparison.OrdinalIgnoreCase))
+                                .Where(name => !name.Equals(schedule.Backup, StringComparison.OrdinalIgnoreCase))
+                                .FirstOrDefault();
+
+                            if (available != null)
+                            {
+                                var oldKanban = schedule.Kanban;
+                                schedule.Kanban = available;
+                                scheduleChanged = true;
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] İzleme Kanban değiştirildi: {oldKanban} → {available} (izin nedeniyle)");
+                            }
+                            else
+                            {
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] İzleme Kanban için uygun kullanıcı bulunamadı: {schedule.Kanban}");
+                            }
+                        }
+
+                        // MONITORING kontrolü
+                        if (!string.IsNullOrWhiteSpace(schedule.Monitoring) && IsOnLeave(schedule.Monitoring, date))
+                        {
+                            _logger.LogInformation("Monitoring {Monitoring} is on leave for date {Date}",
+                                schedule.Monitoring, date);
+
+                            var available = izlemeNames
+                                .Where(name => !IsOnLeave(name, date))
+                                .Where(name => !name.Equals(schedule.Kanban, StringComparison.OrdinalIgnoreCase))
+                                .Where(name => !name.Equals(schedule.Backup, StringComparison.OrdinalIgnoreCase))
+                                .FirstOrDefault();
+
+                            if (available != null)
+                            {
+                                var oldMonitoring = schedule.Monitoring;
+                                schedule.Monitoring = available;
+                                scheduleChanged = true;
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] İzleme Monitoring değiştirildi: {oldMonitoring} → {available} (izin nedeniyle)");
+                            }
+                            else
+                            {
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] İzleme Monitoring için uygun kullanıcı bulunamadı: {schedule.Monitoring}");
+                            }
+                        }
+
+                        // BACKUP kontrolü
+                        if (!string.IsNullOrWhiteSpace(schedule.Backup) && IsOnLeave(schedule.Backup, date))
+                        {
+                            _logger.LogInformation("Backup {Backup} is on leave for date {Date}",
+                                schedule.Backup, date);
+
+                            var available = izlemeNames
+                                .Where(name => !IsOnLeave(name, date))
+                                .Where(name => !name.Equals(schedule.Kanban, StringComparison.OrdinalIgnoreCase))
+                                .Where(name => !name.Equals(schedule.Monitoring, StringComparison.OrdinalIgnoreCase))
+                                .FirstOrDefault();
+
+                            if (available != null)
+                            {
+                                var oldBackup = schedule.Backup;
+                                schedule.Backup = available;
+                                scheduleChanged = true;
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] İzleme Backup değiştirildi: {oldBackup} → {available} (izin nedeniyle)");
+                            }
+                            else
+                            {
+                                conflictLog.Add($"[{date:yyyy-MM-dd}] İzleme Backup için uygun kullanıcı bulunamadı: {schedule.Backup}");
+                            }
+                        }
+                    }
+
+                    if (scheduleChanged)
+                    {
+                        hasChanges = true;
+                        _logger.LogInformation("Schedule changed for date {Date}", date);
+                    }
+                }
+
+                // Değişiklikleri kaydet
+                if (hasChanges)
+                {
+                    _logger.LogInformation("Saving {ChangeCount} schedule changes", conflictLog.Count);
+                    // Update yerine direkt SaveChanges çağır
+                    await _context.SaveChangesAsync();
+                    _logger.LogInformation("İzin onayı nedeniyle nöbet programında {ChangeCount} değişiklik yapıldı.", conflictLog.Count);
+                }
+                else
+                {
+                    _logger.LogInformation("İzin onayı sonrası nöbet programında değişiklik yapılmadı.");
+                }
+
+                // Çakışma loglarını kaydet
+                if (conflictLog.Any())
+                {
+                    _logger.LogInformation("İzin çakışması çözümleme raporu:");
+                    foreach (var log in conflictLog)
+                    {
+                        _logger.LogInformation(log);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "İzin çakışması çözümlenirken hata oluştu.");
+                throw;
             }
         }
 
