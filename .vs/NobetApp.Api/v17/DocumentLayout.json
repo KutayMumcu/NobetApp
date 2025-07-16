@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|c:\\users\\kutay\\desktop\\nobetapp.api\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|solutionrelative:backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|c:\\users\\kutay\\desktop\\nobetapp.api\\backend\\controllers\\dutyschedulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9AAE4750-4D3E-4A23-B96E-B87B466D40FD}|NobetApp.Api.csproj|solutionrelative:backend\\controllers\\dutyschedulecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\Backend\\Program.cs",
-              "RelativeDocumentMoniker": "Backend\\Program.cs",
-              "ToolTip": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\Backend\\Program.cs",
-              "RelativeToolTip": "Backend\\Program.cs",
-              "ViewState": "AgIAAKwAAAAAAAAAAAAAAKwAAAApAAAAAAAAAA==",
+              "Title": "DutyScheduleController.cs",
+              "DocumentMoniker": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\Backend\\Controllers\\DutyScheduleController.cs",
+              "RelativeDocumentMoniker": "Backend\\Controllers\\DutyScheduleController.cs",
+              "ToolTip": "C:\\Users\\kutay\\Desktop\\NobetApp.Api\\Backend\\Controllers\\DutyScheduleController.cs",
+              "RelativeToolTip": "Backend\\Controllers\\DutyScheduleController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBcAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T12:32:47.421Z",
+              "WhenOpened": "2025-07-16T07:12:56.934Z",
               "EditorCaption": ""
             }
           ]
